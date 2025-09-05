@@ -16,15 +16,21 @@ function agregarTarea() {
   }
   idSiguiente++;
 }
+
 //* Funcion listarTareas, lista todas las tareas tanto hechas como no hechas
 function listarTareas() {
   alert("Lista de tareas en consola");
-  console.log("Tareas por completar:");
-  for (let i = 0; i < tareas.length; i++) {
-    let estado = tareas[i].completado ? "completado" : "Por completar";
-    console.log(`${tareas[i].id} - ${tareas[i].nombre} (${estado})`);
+  if (tareas.length === 0) {
+    console.log("No hay tareas por realizar");
+  } else {
+    console.log("Listado de tareas:");
+    for (let i = 0; i < tareas.length; i++) {
+      let estado = tareas[i].completado ? "completado" : "Por completar";
+      console.log(`${tareas[i].id} - ${tareas[i].nombre} (${estado})`);
+    }
   }
 }
+
 //* Funcion completarTarea, una vez realizada pasa su estado a completada
 function completarTarea() {
   let idTarea = Number(prompt("Ingrese el id de la tarea a completar"));
@@ -41,6 +47,7 @@ function completarTarea() {
     alert("Invalido, ingrese un valor valido");
   }
 }
+
 //* Funcion eliminarTarea, elimina la tarea del arreglo
 function eliminarTarea() {
   let idTarea = Number(prompt("Ingrese el id de la tarea a eliminar"));
