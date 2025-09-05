@@ -76,7 +76,7 @@ let idSiguiente = 1;
 while (opcion !== 5) {
   opcion = Number(
     prompt(
-      "Seleccione una opcion\n 1. Agregar tarea\n 2. Listar tareas\n 3. Completar tarea\n 4. Eliminar tarea\n Salir"
+      "Seleccione una opcion\n 1. Agregar tarea\n 2. Listar tareas\n 3. Completar tarea\n 4. Eliminar tarea\n 5. Salir"
     )
   );
 
