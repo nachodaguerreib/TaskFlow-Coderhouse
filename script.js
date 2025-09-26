@@ -1,8 +1,9 @@
 //* Creacion de clase tarea
 class Tarea {
-  constructor(id, nombre) {
+  constructor(id, nombre, fecha = "") {
     this.id = id;
     this.nombre = nombre;
+    this.fecha = fecha;
     this.completado = false;
   }
 
@@ -11,7 +12,7 @@ class Tarea {
   }
 
   mostrar() {
-    return this.nombre;
+    return this.fecha ? `${this.nombre} (Para: ${this.fecha})` : this.nombre;
   }
 }
 
@@ -31,13 +32,20 @@ actualizarListaTareas();
 //* Función agregarTarea desde input
 function agregarTarea() {
   const input = document.getElementById("nueva-tarea");
+  const inputFecha = document.getElementById("fecha-tarea");
+
   const nombreTarea = input.value.trim();
+  const fechaTarea = inputFecha.value;
+
   if (!nombreTarea) return;
 
-  const tarea = new Tarea(idSiguiente, nombreTarea);
+  const tarea = new Tarea(idSiguiente, nombreTarea, fechaTarea);
   tareas.push(tarea);
   idSiguiente++;
+
   input.value = "";
+  inputFecha.value = "";
+
   actualizarListaTareas();
 }
 
