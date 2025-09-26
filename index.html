@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administrador de Tareas</title>
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
@@ -13,13 +16,13 @@
       <p class="info">
         Este Administrador de Tareas te permite organizarte fácilmente: podés
         agregar nuevas tareas, ver la lista completa, marcar como realizadas las
-        que ya completaste y eliminar las que ya no necesites. Todo se maneja
-        desde un menú simple e intuitivo que te guía paso a paso.
+        que ya completaste y eliminar las que ya no necesites.
       </p>
 
-      <button class="btn agregar-boton">Agregar Tarea</button>
-      <button class="btn completar-boton">Completar Tarea</button>
-      <button class="btn eliminar-boton">Eliminar Tarea</button>
+      <div class="input-container">
+        <input type="text" id="nueva-tarea" placeholder="Nueva tarea..." />
+        <button class="btn agregar-boton">Agregar</button>
+      </div>
 
       <ul id="lista-tareas"></ul>
     </div>

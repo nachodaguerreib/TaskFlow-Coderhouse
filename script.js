@@ -11,9 +11,7 @@ class Tarea {
   }
 
   mostrar() {
-    return `${this.id}, ${this.nombre}, ${
-      this.completado ? "Completada" : "Por completar"
-    }`;
+    return this.nombre;
   }
 }
 
@@ -30,82 +28,77 @@ let idSiguiente = tareas.length + 1;
 //* Llamada inicial para renderizar
 actualizarListaTareas();
 
-//* Funcion agregarTarea, agrega la tarea al arreglo de tareas
+//* Función agregarTarea desde input
 function agregarTarea() {
-  let nombreTarea = prompt("Ingrese el nombre de la tarea");
+  const input = document.getElementById("nueva-tarea");
+  const nombreTarea = input.value.trim();
+  if (!nombreTarea) return;
 
-  if (nombreTarea !== null && nombreTarea.trim() !== "") {
-    let tarea = new Tarea(idSiguiente, nombreTarea);
-    tareas.push(tarea);
-    idSiguiente++;
-    alert("Tarea agregada con exito a la lista");
-    actualizarListaTareas();
-  } else {
-    alert("Invalido, ingrese un valor valido");
-  }
+  const tarea = new Tarea(idSiguiente, nombreTarea);
+  tareas.push(tarea);
+  idSiguiente++;
+  input.value = "";
+  actualizarListaTareas();
 }
 
-//* Funcion completarTarea, una vez realizada pasa su estado a completada
-function completarTarea() {
-  let idTarea = Number(prompt("Ingrese el id de la tarea a completar"));
-
-  if (!isNaN(idTarea) && idTarea > 0) {
-    let tareaEncontrada = tareas.find((t) => t.id === idTarea);
-    if (tareaEncontrada) {
-      tareaEncontrada.marcarCompletada();
-      actualizarListaTareas();
-      alert("Tarea completada correctamente");
-    } else {
-      alert("No se encontro la tarea");
-    }
-  } else {
-    alert("Invalido, ingrese un valor valido");
-  }
-}
-
-//* Funcion eliminarTarea, elimina la tarea del arreglo
-function eliminarTarea() {
-  let idTarea = Number(prompt("Ingrese el id de la tarea a eliminar"));
-
-  if (!isNaN(idTarea) && idTarea > 0) {
-    let tareaEncontrada = tareas.find((t) => t.id === idTarea);
-    if (tareaEncontrada) {
-      tareas = tareas.filter((t) => t.id !== idTarea);
-      tareas.forEach((t, index) => {
-        t.id = index + 1;
-      });
-      actualizarListaTareas();
-      alert("Tarea eliminada con exito");
-    } else {
-      alert("No se pudo encontrar la tarea");
-    }
-  } else {
-    alert("Invalido, ingrese un valor valido");
-  }
+//* Función para eliminar tarea por id
+function eliminarTarea(id) {
+  tareas = tareas.filter((t) => t.id !== id);
+  tareas.forEach((t, index) => (t.id = index + 1));
   idSiguiente = tareas.length + 1;
+  actualizarListaTareas();
+}
+
+//* Función para completar tarea por id
+function completarTarea(id) {
+  const tarea = tareas.find((t) => t.id === id);
+  if (tarea) {
+    tarea.marcarCompletada();
+    actualizarListaTareas();
+  }
 }
 
 //* Renderiza la lista en el HTML y actualiza localStorage
 function actualizarListaTareas() {
   const lista = document.getElementById("lista-tareas");
-  lista.innerHTML = ""; // limpia antes de renderizar
+  lista.innerHTML = "";
 
   tareas.forEach((t) => {
     const li = document.createElement("li");
     li.innerText = t.mostrar();
     li.style.textDecoration = t.completado ? "line-through" : "none";
+
+    // Botón completar
+    const btnCompletar = document.createElement("button");
+    btnCompletar.innerText = "Completar";
+    btnCompletar.classList.add("btn");
+    btnCompletar.style.marginLeft = "10px";
+    btnCompletar.addEventListener("click", () => completarTarea(t.id));
+
+    // Botón eliminar
+    const btnEliminar = document.createElement("button");
+    btnEliminar.innerText = "Eliminar";
+    btnEliminar.classList.add("btn");
+    btnEliminar.style.marginLeft = "5px";
+    btnEliminar.addEventListener("click", () => eliminarTarea(t.id));
+
+    li.appendChild(btnCompletar);
+    li.appendChild(btnEliminar);
     lista.appendChild(li);
   });
 
   localStorage.setItem("tareas", JSON.stringify(tareas));
 }
 
-//* Funcionalidad
-const botonAgregar = document.querySelector(".agregar-boton");
-botonAgregar.addEventListener("click", agregarTarea);
+//* Funcionalidad botón agregar
+document
+  .querySelector(".agregar-boton")
+  .addEventListener("click", agregarTarea);
 
-const botonCompletar = document.querySelector(".completar-boton");
-botonCompletar.addEventListener("click", completarTarea);
-
-const botonEliminar = document.querySelector(".eliminar-boton");
-botonEliminar.addEventListener("click", eliminarTarea);
+//* Agregar evento para Enter en el input
+const inputTarea = document.getElementById("nueva-tarea");
+inputTarea.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    agregarTarea();
+  }
+});

@@ -1,60 +1,163 @@
-body {
-  font-family: Arial;
-  font-size: 16px;
+* {
   margin: 0;
   padding: 0;
-  text-align: center;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #f5f7fa;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ==========================
+   CARD PRINCIPAL
+========================== */
 .card {
-  width: 600px;
-  margin: 40px auto;
-  padding: 10px 16px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 650px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================
+   TITULO E INFO
+========================== */
 .title {
-  font-size: 36px;
-  color: rgb(19, 71, 202);
+  font-size: 38px;
+  font-weight: 700;
+  color: #1347ca;
   margin-bottom: 20px;
 }
 
 .info {
-  width: 400px;
-  margin: 0 auto 25px;
-  margin-bottom: 15px;
-  line-height: 1.5;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.btn {
-  background-color: rgb(4, 108, 235);
-  color: rgb(255, 255, 255);
-  border: none;
-  font-weight: bold;
-  padding: 9px 15px;
+/* ==========================
+   Inputs
+========================== */
+input[type="text"] {
+  width: 70%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
   border-radius: 6px;
-  margin: 0 10px 20px 0;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border: 2px solid rgb(19, 71, 202);
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* ==========================
+   BOTONES
+========================== */
+.btn {
+  background-color: #046ceb;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  margin: 0 10px 15px 0;
   cursor: pointer;
-  transition: background-color 0.15s ease-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
 }
 
 .btn:hover {
-  background-color: rgb(13, 99, 203);
+  background-color: #0d63cb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
+/* ==========================
+   LISTA DE TAREAS
+========================== */
 #lista-tareas {
   list-style: none;
-  text-align: left;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  margin-top: 15px;
 }
 
 #lista-tareas li {
-  background-color: rgb(236, 241, 245);
-  border-left: 4px solid rgb(19, 71, 202);
+  background-color: #ecf1f5;
+  border-left: 5px solid #1347ca;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+#lista-tareas li:hover {
+  background-color: #dde6f0;
+}
+
+/* ==========================
+   BOTONES DENTRO DE LI
+========================== */
+#lista-tareas li button {
+  background-color: #046ceb;
+  color: #fff;
+  border: none;
   border-radius: 6px;
-  padding: 7px 10px;
-  margin-bottom: 7px;
-  line-height: 1.4;
+  padding: 5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+#lista-tareas li button:hover {
+  background-color: #0d63cb;
+  transform: translateY(-1px);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 700px) {
+  .card {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .info {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
 }
