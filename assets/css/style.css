@@ -1,0 +1,60 @@
+body {
+  font-family: Arial;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.card {
+  width: 600px;
+  margin: 40px auto;
+  padding: 10px 16px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+.title {
+  font-size: 36px;
+  color: rgb(19, 71, 202);
+  margin-bottom: 20px;
+}
+
+.info {
+  width: 400px;
+  margin: 0 auto 25px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.btn {
+  background-color: rgb(4, 108, 235);
+  color: rgb(255, 255, 255);
+  border: none;
+  font-weight: bold;
+  padding: 9px 15px;
+  border-radius: 6px;
+  margin: 0 10px 20px 0;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: background-color 0.15s ease-out;
+}
+
+.btn:hover {
+  background-color: rgb(13, 99, 203);
+}
+
+#lista-tareas {
+  list-style: none;
+  text-align: left;
+  display: inline-block;
+}
+
+#lista-tareas li {
+  background-color: rgb(236, 241, 245);
+  border-left: 4px solid rgb(19, 71, 202);
+  border-radius: 6px;
+  padding: 7px 10px;
+  margin-bottom: 7px;
+  line-height: 1.4;
+}

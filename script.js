@@ -1,33 +1,47 @@
+//* Creacion de clase tarea
+class Tarea {
+  constructor(id, nombre) {
+    this.id = id;
+    this.nombre = nombre;
+    this.completado = false;
+  }
+
+  marcarCompletada() {
+    this.completado = true;
+  }
+
+  mostrar() {
+    return `${this.id}, ${this.nombre}, ${
+      this.completado ? "Completada" : "Por completar"
+    }`;
+  }
+}
+
+//* Función para cargar tareas desde localStorage como instancias de Tarea
+function cargarTareas() {
+  const tareasGuardadas = JSON.parse(localStorage.getItem("tareas")) || [];
+  return tareasGuardadas.map((t) => Object.assign(new Tarea(), t));
+}
+
+//* Datos globales
+let tareas = cargarTareas();
+let idSiguiente = tareas.length + 1;
+
+//* Llamada inicial para renderizar
+actualizarListaTareas();
+
 //* Funcion agregarTarea, agrega la tarea al arreglo de tareas
 function agregarTarea() {
   let nombreTarea = prompt("Ingrese el nombre de la tarea");
 
   if (nombreTarea !== null && nombreTarea.trim() !== "") {
-    let tarea = {
-      id: idSiguiente,
-      nombre: nombreTarea,
-      completado: false,
-    };
-
+    let tarea = new Tarea(idSiguiente, nombreTarea);
     tareas.push(tarea);
+    idSiguiente++;
     alert("Tarea agregada con exito a la lista");
+    actualizarListaTareas();
   } else {
     alert("Invalido, ingrese un valor valido");
-  }
-  idSiguiente++;
-}
-
-//* Funcion listarTareas, lista todas las tareas tanto hechas como no hechas
-function listarTareas() {
-  alert("Lista de tareas en consola");
-  if (tareas.length === 0) {
-    console.log("No hay tareas por realizar");
-  } else {
-    console.log("Listado de tareas:");
-    for (let i = 0; i < tareas.length; i++) {
-      let estado = tareas[i].completado ? "completado" : "Por completar";
-      console.log(`${tareas[i].id} - ${tareas[i].nombre} (${estado})`);
-    }
   }
 }
 
@@ -35,10 +49,11 @@ function listarTareas() {
 function completarTarea() {
   let idTarea = Number(prompt("Ingrese el id de la tarea a completar"));
 
-  if (idTarea !== null && idTarea > 0) {
+  if (!isNaN(idTarea) && idTarea > 0) {
     let tareaEncontrada = tareas.find((t) => t.id === idTarea);
     if (tareaEncontrada) {
-      tareaEncontrada.completado = true;
+      tareaEncontrada.marcarCompletada();
+      actualizarListaTareas();
       alert("Tarea completada correctamente");
     } else {
       alert("No se encontro la tarea");
@@ -52,12 +67,14 @@ function completarTarea() {
 function eliminarTarea() {
   let idTarea = Number(prompt("Ingrese el id de la tarea a eliminar"));
 
-  if (idTarea !== null && idTarea > 0) {
+  if (!isNaN(idTarea) && idTarea > 0) {
     let tareaEncontrada = tareas.find((t) => t.id === idTarea);
     if (tareaEncontrada) {
-      let tareasFiltradas = tareas.filter((t) => t.id !== idTarea);
-      tareas.length = 0;
-      tareas = tareasFiltradas;
+      tareas = tareas.filter((t) => t.id !== idTarea);
+      tareas.forEach((t, index) => {
+        t.id = index + 1;
+      });
+      actualizarListaTareas();
       alert("Tarea eliminada con exito");
     } else {
       alert("No se pudo encontrar la tarea");
@@ -65,38 +82,30 @@ function eliminarTarea() {
   } else {
     alert("Invalido, ingrese un valor valido");
   }
+  idSiguiente = tareas.length + 1;
 }
 
-//*  Datos globales definidos
-let tareas = [];
-let opcion = "";
-let idSiguiente = 1;
+//* Renderiza la lista en el HTML y actualiza localStorage
+function actualizarListaTareas() {
+  const lista = document.getElementById("lista-tareas");
+  lista.innerHTML = ""; // limpia antes de renderizar
 
-//* Menu de navegacion con while y switch
-while (opcion !== 5) {
-  opcion = Number(
-    prompt(
-      "Seleccione una opcion\n 1. Agregar tarea\n 2. Listar tareas\n 3. Completar tarea\n 4. Eliminar tarea\n 5. Salir"
-    )
-  );
+  tareas.forEach((t) => {
+    const li = document.createElement("li");
+    li.innerText = t.mostrar();
+    li.style.textDecoration = t.completado ? "line-through" : "none";
+    lista.appendChild(li);
+  });
 
-  switch (opcion) {
-    case 1:
-      agregarTarea();
-      break;
-    case 2:
-      listarTareas();
-      break;
-    case 3:
-      completarTarea();
-      break;
-    case 4:
-      eliminarTarea();
-      break;
-    case 5:
-      alert("Gracias por utilizar el Administrador de Tareas");
-      break;
-    default:
-      alert("Opcion invalida, vuelva a intentar");
-  }
+  localStorage.setItem("tareas", JSON.stringify(tareas));
 }
+
+//* Funcionalidad
+const botonAgregar = document.querySelector(".agregar-boton");
+botonAgregar.addEventListener("click", agregarTarea);
+
+const botonCompletar = document.querySelector(".completar-boton");
+botonCompletar.addEventListener("click", completarTarea);
+
+const botonEliminar = document.querySelector(".eliminar-boton");
+botonEliminar.addEventListener("click", eliminarTarea);
