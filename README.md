@@ -22,7 +22,7 @@ Administrador de tareas moderno con sistema de prioridades y almacenamiento pers
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/nachodaguerreib/Administrador-de-Tareas-en-JS-Coderhouse
+git clone https://github.com/nachodaguerreib/TaskFlow-Coderhouse
 
 # Abrir index.html en el navegador
 ```
