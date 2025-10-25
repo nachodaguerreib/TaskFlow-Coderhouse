@@ -2,15 +2,16 @@
 //* CLASE PRINCIPAL
 //* ===============================
 class Tarea {
-  constructor(id, nombre, fecha = "", completado = false) {
+  constructor(id, nombre, fecha = "", prioridad = "Media", completado = false) {
     this.id = id;
     this.nombre = nombre;
     this.fecha = fecha;
+    this.prioridad = prioridad;
     this.completado = completado;
   }
 
   marcarCompletada() {
-    this.completado = true;
+    this.completado = !this.completado;
   }
 
   mostrar() {
@@ -19,34 +20,48 @@ class Tarea {
 }
 
 //* ===============================
-//* CARGA INICIAL DE DATOS (JSON)
+//* CARGA INICIAL DE DATOS
 //* ===============================
+const datosIniciales = [
+  {
+    id: 1,
+    nombre: "Comprar insumos para proyecto",
+    fecha: "2025-10-30",
+    completado: false,
+    prioridad: "Alta",
+  },
+  {
+    id: 2,
+    nombre: "Preparar presentación",
+    fecha: "2025-11-01",
+    completado: false,
+    prioridad: "Alta",
+  },
+  {
+    id: 3,
+    nombre: "Ordenar escritorio",
+    fecha: "",
+    completado: false,
+    prioridad: "Baja",
+  },
+];
+
 async function cargarTareas() {
   try {
-    const tareasGuardadas = JSON.parse(localStorage.getItem("tareas")) || [];
-
-    if (tareasGuardadas.length === 0) {
-      const respuesta = await fetch("./assets/data/tarea.json");
-      const datos = await respuesta.json();
-
-      Swal.fire({
-        title: "Datos cargados",
-        text: "Se importaron tareas iniciales desde el JSON.",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-
-      const tareasIniciales = datos.map(
-        (t) => new Tarea(t.id, t.nombre, t.fecha, t.completado)
-      );
-      localStorage.setItem("tareas", JSON.stringify(tareasIniciales));
-      return tareasIniciales;
+    const tareasGuardadas = localStorage.getItem("tareas");
+    if (tareasGuardadas) {
+      const parsed = JSON.parse(tareasGuardadas);
+      return parsed.map((t) => Object.assign(new Tarea(), t));
     }
 
-    return tareasGuardadas.map((t) => Object.assign(new Tarea(), t));
+    const tareasIniciales = datosIniciales.map(
+      (t) => new Tarea(t.id, t.nombre, t.fecha, t.prioridad, t.completado)
+    );
+    localStorage.setItem("tareas", JSON.stringify(tareasIniciales));
+    return tareasIniciales;
   } catch (error) {
-    Swal.fire("Error", "No se pudo cargar el archivo JSON.", "error");
+    console.error("Error al cargar tareas:", error);
+    Swal.fire("Error", "No se pudieron cargar las tareas.", "error");
     return [];
   }
 }
@@ -62,7 +77,8 @@ let idSiguiente = 1;
 //* ===============================
 document.addEventListener("DOMContentLoaded", async () => {
   tareas = await cargarTareas();
-  idSiguiente = tareas.length + 1;
+  idSiguiente =
+    tareas.length > 0 ? Math.max(...tareas.map((t) => t.id)) + 1 : 1;
   actualizarListaTareas();
 });
 
@@ -70,30 +86,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 //* AGREGAR TAREA
 //* ===============================
 function agregarTarea() {
-  const input = document.getElementById("nueva-tarea");
-  const inputFecha = document.getElementById("fecha-tarea");
+  const nombre = document.getElementById("nueva-tarea").value.trim();
+  const fecha = document.getElementById("fecha-tarea").value;
+  const prioridad = document.getElementById("prioridad-tarea").value;
 
-  const nombreTarea = input.value.trim();
-  const fechaTarea = inputFecha.value;
-
-  if (!nombreTarea) {
-    Swal.fire("Error", "Debes ingresar un nombre de tarea.", "warning");
+  if (!nombre) {
+    Swal.fire({
+      icon: "warning",
+      title: "Campo vacío",
+      text: "Debes ingresar un nombre de tarea.",
+      confirmButtonColor: "#2563eb",
+    });
     return;
   }
 
-  const tarea = new Tarea(idSiguiente, nombreTarea, fechaTarea);
+  const tarea = new Tarea(idSiguiente, nombre, fecha, prioridad);
   tareas.push(tarea);
   idSiguiente++;
 
-  input.value = "";
-  inputFecha.value = "";
+  document.getElementById("nueva-tarea").value = "";
+  document.getElementById("fecha-tarea").value = "";
+  document.getElementById("prioridad-tarea").value = "Media";
 
   Swal.fire({
     position: "top-end",
     icon: "success",
-    title: "Tarea agregada",
+    title: "✅ Tarea agregada",
     showConfirmButton: false,
-    timer: 1000,
+    timer: 1500,
+    toast: true,
   });
 
   actualizarListaTareas();
@@ -110,18 +131,18 @@ function eliminarTarea(id) {
     showCancelButton: true,
     confirmButtonText: "Sí, eliminar",
     cancelButtonText: "Cancelar",
+    confirmButtonColor: "#ef4444",
+    cancelButtonColor: "#6b7280",
   }).then((result) => {
     if (result.isConfirmed) {
       tareas = tareas.filter((t) => t.id !== id);
-      tareas.forEach((t, index) => (t.id = index + 1));
-      idSiguiente = tareas.length + 1;
       actualizarListaTareas();
-
-      Swal.fire(
-        "Eliminada",
-        "La tarea fue eliminada correctamente.",
-        "success"
-      );
+      Swal.fire({
+        icon: "success",
+        title: "Eliminada",
+        text: "La tarea ha sido eliminada.",
+        confirmButtonColor: "#2563eb",
+      });
     }
   });
 }
@@ -136,11 +157,13 @@ function completarTarea(id) {
     actualizarListaTareas();
 
     Swal.fire({
+      position: "top-end",
       icon: "success",
-      title: "¡Bien hecho!",
-      text: `Completaste "${tarea.nombre}"`,
-      timer: 1500,
+      title: tarea.completado ? "✅ Completada" : "⏳ Pendiente",
+      text: tarea.nombre,
       showConfirmButton: false,
+      timer: 1500,
+      toast: true,
     });
   }
 }
@@ -158,64 +181,128 @@ function editarTarea(id) {
     inputValue: tarea.nombre,
     showCancelButton: true,
     confirmButtonText: "Guardar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#2563eb",
+    inputValidator: (value) => {
+      if (!value || !value.trim()) {
+        return "Debes ingresar un nombre";
+      }
+    },
   }).then((result) => {
-    if (result.isConfirmed && result.value.trim() !== "") {
+    if (result.isConfirmed && result.value.trim()) {
       tarea.nombre = result.value.trim();
       actualizarListaTareas();
-      Swal.fire(
-        "Actualizada",
-        "La tarea fue modificada correctamente.",
-        "success"
-      );
+      Swal.fire({
+        icon: "success",
+        title: "Actualizada",
+        text: "La tarea ha sido modificada.",
+        confirmButtonColor: "#2563eb",
+      });
     }
   });
 }
 
 //* ===============================
-//* ACTUALIZAR LISTA EN HTML
+//* ACTUALIZAR LISTA CON FILTROS Y ORDEN
 //* ===============================
 function actualizarListaTareas() {
   const lista = document.getElementById("lista-tareas");
   lista.innerHTML = "";
 
-  tareas.forEach((t) => {
-    const li = document.createElement("li");
-    li.innerText = t.mostrar();
+  const filtro = document.getElementById("filtro-tareas").value;
+  const orden = document.getElementById("orden-tareas").value;
 
-    // Agregar clase 'completed' si la tarea ya está completada
-    if (t.completado) li.classList.add("completed");
+  let tareasFiltradas = [...tareas];
 
-    // Botones
-    const btnCompletar = document.createElement("button");
-    btnCompletar.innerText = "Completar";
-    btnCompletar.classList.add("btn");
-    btnCompletar.disabled = t.completado; // No se puede completar dos veces
-    btnCompletar.addEventListener("click", () => completarTarea(t.id));
+  if (filtro === "pendientes") {
+    tareasFiltradas = tareasFiltradas.filter((t) => !t.completado);
+  } else if (filtro === "completadas") {
+    tareasFiltradas = tareasFiltradas.filter((t) => t.completado);
+  }
 
-    const btnEditar = document.createElement("button");
-    btnEditar.innerText = "Editar";
-    btnEditar.classList.add("btn");
-    btnEditar.addEventListener("click", () => editarTarea(t.id));
-
-    const btnEliminar = document.createElement("button");
-    btnEliminar.innerText = "Eliminar";
-    btnEliminar.classList.add("btn");
-    btnEliminar.addEventListener("click", () => eliminarTarea(t.id));
-
-    li.append(btnCompletar, btnEditar, btnEliminar);
-    lista.appendChild(li);
+  tareasFiltradas.sort((a, b) => {
+    if (orden === "nombre") return a.nombre.localeCompare(b.nombre);
+    if (orden === "fecha")
+      return (a.fecha || "9999").localeCompare(b.fecha || "9999");
+    if (orden === "prioridad") {
+      const map = { Alta: 1, Media: 2, Baja: 3 };
+      return map[a.prioridad] - map[b.prioridad];
+    }
+    return a.id - b.id;
   });
+
+  if (tareasFiltradas.length === 0) {
+    lista.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p class="empty-text">No hay tareas que mostrar</p>
+          </div>
+        `;
+  } else {
+    tareasFiltradas.forEach((t) => {
+      const li = document.createElement("li");
+      li.id = `tarea-${t.id}`;
+      li.className = `task-item prioridad-${t.prioridad}`;
+      if (t.completado) li.classList.add("completed");
+
+      const prioridadEmoji = {
+        Alta: "🔴",
+        Media: "🟡",
+        Baja: "🟢",
+      };
+
+      const fechaFormateada = t.fecha
+        ? new Date(t.fecha + "T00:00:00").toLocaleDateString("es-ES", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })
+        : null;
+
+      li.innerHTML = `
+            <div class="task-content">
+              <div class="task-info">
+                <div class="task-name">${t.nombre}</div>
+                <div class="task-meta">
+                  <span class="task-badge badge-${t.prioridad.toLowerCase()}">
+                    ${prioridadEmoji[t.prioridad]} ${t.prioridad}
+                  </span>
+                  ${fechaFormateada ? `<span>📅 ${fechaFormateada}</span>` : ""}
+                </div>
+              </div>
+            </div>
+            <div class="task-actions">
+              <button class="btn btn-sm btn-success" onclick="completarTarea(${
+                t.id
+              })" aria-label="Completar tarea">
+                ${t.completado ? "↩️ Pendiente" : "✓ Completar"}
+              </button>
+              <button class="btn btn-sm btn-warning" onclick="editarTarea(${
+                t.id
+              })" aria-label="Editar tarea">
+                ✏️ Editar
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="eliminarTarea(${
+                t.id
+              })" aria-label="Eliminar tarea">
+                🗑️ Eliminar
+              </button>
+            </div>
+          `;
+
+      lista.appendChild(li);
+    });
+  }
 
   localStorage.setItem("tareas", JSON.stringify(tareas));
 }
 
 //* ===============================
-//* EVENTOS PRINCIPALES
+//* EVENTOS FILTRO Y ORDEN
 //* ===============================
 document
-  .querySelector(".agregar-boton")
-  .addEventListener("click", agregarTarea);
-
-document.getElementById("nueva-tarea").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") agregarTarea();
-});
+  .getElementById("filtro-tareas")
+  .addEventListener("change", actualizarListaTareas);
+document
+  .getElementById("orden-tareas")
+  .addEventListener("change", actualizarListaTareas);

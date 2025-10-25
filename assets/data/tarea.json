@@ -1,20 +1,23 @@
 [
   {
     "id": 1,
-    "nombre": "Estudiar JavaScript",
+    "nombre": "Comprar insumos para proyecto",
     "fecha": "2025-10-30",
-    "completado": false
-  },
-  {
-    "id": 2,
-    "nombre": "Hacer proyecto final",
-    "fecha": "2025-11-02",
-    "completado": false
+    "completado": false,
+    "prioridad": "Alta"
   },
   {
     "id": 3,
-    "nombre": "Practicar lógica",
-    "fecha": "2025-11-05",
-    "completado": false
+    "nombre": "Preparar presentación",
+    "fecha": "2025-11-01",
+    "completado": false,
+    "prioridad": "Alta"
+  },
+  {
+    "id": 4,
+    "nombre": "Ordenar escritorio",
+    "fecha": "",
+    "completado": false,
+    "prioridad": "Baja"
   }
 ]

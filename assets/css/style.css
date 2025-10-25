@@ -1,3 +1,25 @@
+/* ==================== RESET Y VARIABLES ==================== */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --primary-light: #3b82f6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --dark: #1f2937;
+  --gray: #6b7280;
+  --gray-light: #f3f4f6;
+  --gray-border: #e5e7eb;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,250 +27,423 @@
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #dfe9f3);
-  font-size: 16px;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
-  padding: 20px 15px;
-  transition: background 0.5s ease;
-}
-
-/* ==========================
-   CARD PRINCIPAL
-========================== */
-.card {
-  background: #ffffff;
-  width: 100%;
-  max-width: 650px;
-  padding: 25px 30px;
-  border-radius: 15px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
-}
-
-/* ==========================
-   TITULO E INFO
-========================== */
-.title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #1347ca;
-  margin-bottom: 15px;
-}
-
-.info {
-  font-size: 15px;
-  color: #555;
+  padding: 2rem 1rem;
+  color: var(--dark);
   line-height: 1.6;
-  margin-bottom: 25px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==========================
-   INPUTS
-========================== */
-.input-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+/* ==================== CONTAINER PRINCIPAL ==================== */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeInUp 0.5s ease;
 }
 
-input[type="text"],
-input[type="date"] {
-  padding: 10px 15px;
-  border-radius: 8px;
-  border: 2px solid #1347ca;
-  font-size: 15px;
-  font-weight: 600;
-  outline: none;
-  transition: border 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-input[type="text"] {
-  flex: 1 1 200px;
+/* ==================== HEADER ==================== */
+.header {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
 }
 
-input[type="date"] {
-  flex: 0 0 150px;
+.header-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus {
-  border-color: #0d63cb;
-  box-shadow: 0 0 6px rgba(13, 99, 203, 0.5);
-  transform: scale(1.02);
+.header-subtitle {
+  color: var(--gray);
+  font-size: 1rem;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* ==========================
-   BOTONES
-========================== */
-.btn {
-  background: linear-gradient(145deg, #046ceb, #0d63cb);
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 10px;
-  border: none;
-  margin: 0 5px 10px 0;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+/* ==================== CARD PRINCIPAL ==================== */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 1.5rem;
 }
 
-.btn:hover {
-  background: linear-gradient(145deg, #0d63cb, #046ceb);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+/* ==================== FORMULARIO ==================== */
+.form-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-/* ==========================
-   LISTA DE TAREAS
-========================== */
-#lista-tareas {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 0;
-  margin-top: 15px;
+@media (min-width: 640px) {
+  .form-group {
+    grid-template-columns: 2fr 1fr 1fr auto;
+  }
 }
 
-#lista-tareas li {
-  background-color: #ecf1f5;
-  border-left: 6px solid #1347ca;
-  border-radius: 10px;
-  padding: 12px 15px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
+.input-wrapper {
   position: relative;
 }
 
-#lista-tareas li.completed {
-  border-left-color: #2ecc71;
-  background-color: #e1f7e7;
-  text-decoration: line-through;
-  color: #555;
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: var(--transition);
+  background: var(--white);
+  color: var(--dark);
+  font-weight: 500;
 }
 
-#lista-tareas li:hover {
-  background-color: #dde6f0;
-  transform: translateX(2px);
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* ==========================
-   BOTONES DENTRO DE LI
-========================== */
-#lista-tareas li button {
-  background: linear-gradient(145deg, #046ceb, #0d63cb);
-  color: #fff;
+input[type="text"]::placeholder {
+  color: var(--gray);
+  font-weight: 400;
+}
+
+/* ==================== BOTONES ==================== */
+.btn {
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 6px;
-  padding: 5px 10px;
-  margin: 3px 3px 0 0;
-  cursor: pointer;
-  font-size: 13px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
   font-weight: 600;
-  transition: all 0.25s ease;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow);
 }
 
-#lista-tareas li button:hover {
-  background: linear-gradient(145deg, #0d63cb, #046ceb);
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--white);
+}
+
+.btn-warning {
+  background: var(--warning);
+  color: var(--white);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.btn-success:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow);
 }
 
-/* ==========================
-   RESPONSIVE
-========================== */
-@media (max-width: 768px) {
+/* ==================== FILTROS ==================== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--gray-light);
+  border-radius: var(--radius-sm);
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ==================== LISTA DE TAREAS ==================== */
+.tasks-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.task-item {
+  background: var(--white);
+  border: 2px solid var(--gray-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.task-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--primary);
+  transition: var(--transition);
+}
+
+.task-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow);
+  transform: translateX(4px);
+}
+
+.task-item.completed {
+  background: #f0fdf4;
+  border-color: var(--success);
+}
+
+.task-item.completed::before {
+  background: var(--success);
+}
+
+.task-item.prioridad-Alta::before {
+  background: var(--danger);
+}
+
+.task-item.prioridad-Media::before {
+  background: var(--warning);
+}
+
+.task-item.prioridad-Baja::before {
+  background: var(--success);
+}
+
+.task-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.task-info {
+  flex: 1;
+}
+
+.task-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.task-item.completed .task-name {
+  text-decoration: line-through;
+  color: var(--gray);
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.task-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-alta {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+.badge-media {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.badge-baja {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 640px) {
   body {
-    padding: 15px 10px;
+    padding: 1rem 0.5rem;
+  }
+
+  .header {
+    padding: 1.5rem 1rem;
+  }
+
+  .header-title {
+    font-size: 1.75rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
   }
 
   .card {
-    padding: 20px;
+    padding: 1.25rem;
   }
 
-  .title {
-    font-size: 28px;
+  .form-group {
+    gap: 0.75rem;
   }
 
-  .info {
-    font-size: 14px;
-  }
-
-  .btn {
-    padding: 8px 14px;
-    font-size: 14px;
-    margin: 0 3px 8px 0;
-  }
-
-  input[type="text"] {
-    flex: 1 1 150px;
-    margin-bottom: 8px;
-  }
-
-  input[type="date"] {
-    flex: 1 1 120px;
-    margin-bottom: 8px;
-  }
-
-  #lista-tareas li {
+  .task-content {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
   }
 
-  #lista-tareas li button {
-    margin: 5px 5px 0 0;
+  .task-actions {
+    width: 100%;
+  }
+
+  .task-actions .btn-sm {
+    flex: 1;
   }
 }
 
-@media (max-width: 480px) {
-  .card {
-    padding: 15px;
+/* ==================== ANIMACIONES ==================== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
   }
-
-  .title {
-    font-size: 24px;
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
+}
 
-  input[type="text"],
-  input[type="date"] {
-    flex: 1 1 100%;
-  }
+.task-item {
+  animation: slideIn 0.3s ease;
+}
 
-  .btn {
-    width: 100%;
-    padding: 10px 0;
-    margin-bottom: 10px;
-  }
+/* ==================== LOADING ==================== */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--white);
+  animation: spin 1s ease-in-out infinite;
+}
 
-  #lista-tareas li {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  #lista-tareas li button {
-    width: 100%;
-    margin: 5px 0 0 0;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

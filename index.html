@@ -3,40 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administrador de Tareas</title>
+    <meta
+      name="description"
+      content="Administrador de tareas profesional con filtros, prioridades y almacenamiento local"
+    />
+    <title>TaskFlow - Administrador de Tareas</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Animate.css para animaciones -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <div class="card">
-      <h1 class="title">Administrador de Tareas</h1>
-      <p class="info">
-        Este Administrador de Tareas te permite organizarte fácilmente: podés
-        agregar nuevas tareas, ver la lista completa, marcarlas como realizadas,
-        editarlas o eliminarlas.
-      </p>
+    <div class="container">
+      <header class="header">
+        <h1 class="header-title">📋 TaskFlow</h1>
+        <p class="header-subtitle">
+          Organiza tus tareas de forma eficiente. Agrega, edita, completa y
+          filtra tus pendientes.
+        </p>
+      </header>
 
-      <div class="input-container">
-        <input type="text" id="nueva-tarea" placeholder="Nueva tarea..." />
-        <input type="date" id="fecha-tarea" />
-        <button class="btn agregar-boton">Agregar</button>
+      <div class="card">
+        <form
+          class="form-group"
+          id="task-form"
+          onsubmit="event.preventDefault(); agregarTarea();"
+        >
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="nueva-tarea"
+              placeholder="¿Qué necesitas hacer?"
+              aria-label="Nueva tarea"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="input-wrapper">
+            <input
+              type="date"
+              id="fecha-tarea"
+              aria-label="Fecha de la tarea"
+            />
+          </div>
+
+          <div class="input-wrapper">
+            <select id="prioridad-tarea" aria-label="Prioridad de la tarea">
+              <option value="Alta">🔴 Alta</option>
+              <option value="Media" selected>🟡 Media</option>
+              <option value="Baja">🟢 Baja</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            aria-label="Agregar tarea"
+          >
+            ➕ Agregar
+          </button>
+        </form>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label class="filter-label" for="filtro-tareas"
+              >Filtrar por estado</label
+            >
+            <select id="filtro-tareas" aria-label="Filtrar tareas">
+              <option value="todas">📊 Todas las tareas</option>
+              <option value="pendientes">⏳ Pendientes</option>
+              <option value="completadas">✅ Completadas</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label" for="orden-tareas">Ordenar por</label>
+            <select id="orden-tareas" aria-label="Ordenar tareas">
+              <option value="id">🔢 ID</option>
+              <option value="fecha">📅 Fecha</option>
+              <option value="nombre">🔤 Nombre</option>
+              <option value="prioridad">⚡ Prioridad</option>
+            </select>
+          </div>
+        </div>
+
+        <ul
+          class="tasks-list"
+          id="lista-tareas"
+          role="list"
+          aria-live="polite"
+        ></ul>
       </div>
-
-      <ul id="lista-tareas"></ul>
     </div>
-
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
