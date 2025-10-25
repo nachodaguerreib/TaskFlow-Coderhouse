@@ -6,47 +6,48 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #f5f7fa, #dfe9f3);
   font-size: 16px;
   color: #333;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 20px;
+  padding: 20px 15px;
+  transition: background 0.5s ease;
 }
 
 /* ==========================
    CARD PRINCIPAL
 ========================== */
 .card {
-  background-color: #ffffff;
+  background: #ffffff;
   width: 100%;
   max-width: 650px;
   padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
 }
 
 /* ==========================
    TITULO E INFO
 ========================== */
 .title {
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 700;
   color: #1347ca;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .info {
-  font-size: 16px;
+  font-size: 15px;
   color: #555;
   line-height: 1.6;
   margin-bottom: 25px;
@@ -63,18 +64,18 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 input[type="text"],
 input[type="date"] {
   padding: 10px 15px;
-  border-radius: 6px;
-  border: 2px solid rgb(19, 71, 202);
-  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #1347ca;
+  font-size: 15px;
   font-weight: 600;
   outline: none;
-  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: border 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 
 input[type="text"] {
@@ -82,33 +83,34 @@ input[type="text"] {
 }
 
 input[type="date"] {
-  flex: 0 0 180px;
+  flex: 0 0 150px;
 }
 
 input[type="text"]:focus,
 input[type="date"]:focus {
   border-color: #0d63cb;
-  box-shadow: 0 0 5px rgba(13, 99, 203, 0.5);
+  box-shadow: 0 0 6px rgba(13, 99, 203, 0.5);
+  transform: scale(1.02);
 }
 
 /* ==========================
    BOTONES
 ========================== */
 .btn {
-  background-color: #046ceb;
+  background: linear-gradient(145deg, #046ceb, #0d63cb);
   color: #fff;
   font-weight: 600;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  margin: 0 10px 15px 0;
+  margin: 0 5px 10px 0;
   cursor: pointer;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #0d63cb;
+  background: linear-gradient(145deg, #0d63cb, #046ceb);
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
@@ -127,50 +129,66 @@ input[type="date"]:focus {
 
 #lista-tareas li {
   background-color: #ecf1f5;
-  border-left: 5px solid #1347ca;
-  border-radius: 8px;
+  border-left: 6px solid #1347ca;
+  border-radius: 10px;
   padding: 12px 15px;
   margin-bottom: 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#lista-tareas li.completed {
+  border-left-color: #2ecc71;
+  background-color: #e1f7e7;
+  text-decoration: line-through;
+  color: #555;
 }
 
 #lista-tareas li:hover {
   background-color: #dde6f0;
+  transform: translateX(2px);
 }
 
 /* ==========================
    BOTONES DENTRO DE LI
 ========================== */
 #lista-tareas li button {
-  background-color: #046ceb;
+  background: linear-gradient(145deg, #046ceb, #0d63cb);
   color: #fff;
   border: none;
   border-radius: 6px;
   padding: 5px 10px;
-  margin-left: 5px;
+  margin: 3px 3px 0 0;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
 }
 
 #lista-tareas li button:hover {
-  background-color: #0d63cb;
+  background: linear-gradient(145deg, #0d63cb, #046ceb);
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* ==========================
    RESPONSIVE
 ========================== */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+  body {
+    padding: 15px 10px;
+  }
+
   .card {
     padding: 20px;
   }
 
   .title {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .info {
@@ -180,5 +198,57 @@ input[type="date"]:focus {
   .btn {
     padding: 8px 14px;
     font-size: 14px;
+    margin: 0 3px 8px 0;
+  }
+
+  input[type="text"] {
+    flex: 1 1 150px;
+    margin-bottom: 8px;
+  }
+
+  input[type="date"] {
+    flex: 1 1 120px;
+    margin-bottom: 8px;
+  }
+
+  #lista-tareas li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  #lista-tareas li button {
+    margin: 5px 5px 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  input[type="text"],
+  input[type="date"] {
+    flex: 1 1 100%;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+
+  #lista-tareas li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #lista-tareas li button {
+    width: 100%;
+    margin: 5px 0 0 0;
   }
 }

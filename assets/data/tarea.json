@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nombre": "Estudiar JavaScript",
+    "fecha": "2025-10-30",
+    "completado": false
+  },
+  {
+    "id": 2,
+    "nombre": "Hacer proyecto final",
+    "fecha": "2025-11-02",
+    "completado": false
+  },
+  {
+    "id": 3,
+    "nombre": "Practicar lógica",
+    "fecha": "2025-11-05",
+    "completado": false
+  }
+]
