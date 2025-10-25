@@ -1,9 +1,46 @@
-<h1 align="center">Hola 👋, soy Ignacio Daguerre</h1>
-<h3 align="center">Un apasionando desarrollador de Uruguay</h3>
+# 📋 TaskFlow
 
-- 🌱 Actualmente estoy aprendiendo **Desarrollo Web y JavaScript**
+Administrador de tareas moderno con sistema de prioridades y almacenamiento persistente.
 
-- 📫 Contactate conmigo: **nachodaguerreibgmail.com**
+## 🚀 Características
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.blender.org/" target="_blank" rel="noreferrer"> <img src="https://download.blender.org/branding/community/blender_community_badge_white.svg" alt="blender" width="40" height="40"/> </a> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://www.figma.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.adobe.com/in/products/illustrator.html" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg" alt="illustrator" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://sass-lang.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg" alt="sass" width="40" height="40"/> </a> </p>
+- Crear, editar y eliminar tareas
+- Sistema de prioridades (Alta, Media, Baja)
+- Filtrado por estado (Pendientes/Completadas)
+- Ordenamiento múltiple (Fecha, Nombre, Prioridad)
+- Almacenamiento local automático
+- Diseño responsive y accesible
+
+## 🛠️ Tecnologías
+
+- HTML5, CSS3, JavaScript ES6+
+- SweetAlert2 para notificaciones
+- LocalStorage API
+- Animate.css
+
+## 💻 Instalación
+
+```bash
+# Clonar repositorio
+git clone https://github.com/nachodaguerreib/Administrador-de-Tareas-en-JS-Coderhouse
+
+# Abrir index.html en el navegador
+```
+
+No requiere instalación de dependencias ni servidor.
+
+## 📱 Uso
+
+1. **Agregar tarea**: Escribe el nombre, selecciona fecha y prioridad
+2. **Completar**: Marca tareas terminadas con el botón ✓
+3. **Editar**: Modifica el nombre de cualquier tarea
+4. **Filtrar**: Usa los selectores para organizar tu lista
+
+## 👨‍💻 Autor
+
+**Tu Nombre**  
+GitHub: [@nachodaguerreib](https://github.com/nachodaguerreib)
+
+---
+
+⭐ Si te gustó el proyecto, dale una estrella en GitHub
